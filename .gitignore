@@ -201,5 +201,6 @@ $RECYCLE.BIN/
 *.lnk
 
 reports/
+package-lock.*
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,node
