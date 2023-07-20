@@ -19,7 +19,7 @@ You have to install all dependencies before run the test
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/spartacruz/FHB-api-auto.git
+   git clone https://github.com/spartacruz/rzo-api-auto.git
    ```
 
 2. Install all dependencies
