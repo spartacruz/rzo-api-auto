@@ -17,6 +17,115 @@ const testCase = {
 };
 
 describe("User Detail Update Test", () => {
+    it(`${testCase.positive.UU_1}`, async function() {
+        const userId = 2
+        const bodyPayload = {
+            "email": "yuri@ringzero.com",
+            "first_name": "Yuri",
+            "last_name": "Barru"
+        }
+        const response = await page.putUserUpdateDetail(userId, bodyPayload);
+        expect(response.status).to.equal(200);
+        afterUpdate = await getUserDetail(userId);
+        await checkResponse({
+            response: response,
+            payload: bodyPayload
+        });
+        await updateValidation({
+            afterUpdate: afterUpdate, 
+            payloadData: bodyPayload
+        });
+    });
+
+    it(`${testCase.negative.UU_2}`, async function() {
+        const userId = 9999999
+        const bodyPayload = {
+            "email": "zhv@ringzero.com",
+            "first_name": "Danish",
+            "last_name": "Verma"
+        }
+        const response = await page.putUserUpdateDetail(userId, bodyPayload)
+        expect(response.status).to.equal(400);
+    });
+
+    it(`${testCase.positive.UU_3}`, async function() {
+        const userId = 2
+        const bodyPayload = {
+            "email": "anonymous@ringzero.com"
+        }
+        const response = await page.putUserUpdateDetail(userId, bodyPayload)
+        expect(response.status).to.equal(200);
+        afterUpdate = await getUserDetail(userId);
+        await checkResponse({
+            response: response,
+            payload: bodyPayload
+        });
+        await updateValidation({
+            afterUpdate: afterUpdate, 
+            payloadData: bodyPayload
+        });
+    });
+
+    it(`${testCase.positive.UU_4}`, async function() {
+        const userId = 2
+        const bodyPayload = {
+            "first_name": "Michelle"
+        }
+        const response = await page.putUserUpdateDetail(userId, bodyPayload)
+        expect(response.status).to.equal(200);
+        afterUpdate = await getUserDetail(userId);
+        await checkResponse({
+            response: response,
+            payload: bodyPayload
+        });
+        await updateValidation({
+            afterUpdate: afterUpdate, 
+            payloadData: bodyPayload
+        });
+    });
+
+    it(`${testCase.positive.UU_5}`, async function() {
+        const userId = 2
+        const bodyPayload = {
+            "last_name": "Janice"
+        }
+        const response = await page.putUserUpdateDetail(userId, bodyPayload)
+        expect(response.status).to.equal(200);
+        afterUpdate = await getUserDetail(userId);
+        await checkResponse({
+            response: response,
+            payload: bodyPayload
+        });
+        await updateValidation({
+            afterUpdate: afterUpdate, 
+            payloadData: bodyPayload
+        });
+    });
+
+    it(`${testCase.negative.UU_6}`, async function() {
+        const userId = 2
+        const bodyPayload = {}
+        const beforeUpdate = await getUserDetail(userId);
+        const response = await page.putUserUpdateDetail(userId, bodyPayload)
+        expect(response.status).to.equal(400);
+        afterUpdate = await getUserDetail(userId);
+        await updateValidation({
+            isUpdate: false,
+            beforeUpdate: beforeUpdate,
+            afterUpdate: afterUpdate, 
+            payloadData: bodyPayload
+        });
+    });
+
+    it(`${testCase.negative.UU_7}`, async function() {
+        const bodyPayload = {
+            "email": "zhv@ringzero.com",
+            "first_name": "Danish",
+            "last_name": "Verma"
+        }
+        const response = await page.putUserUpdateDetail(payload = bodyPayload)
+        expect(response.status).to.equal(400);
+    });
 
     async function getUserDetail(userId) {
         const response = await page.getUserDetail(userId);
