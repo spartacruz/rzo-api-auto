@@ -32,6 +32,233 @@ describe(`User List Test`, () => {
     const DEFAULT_PAGE = 1
     const DEFAULT_PER_PAGE = 6
 
+    it(`${testCase.positive.UL_1}`, async function () {
+        const response = await page.getUserList({});
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_2}`, async function () {
+        const zpage = 1;
+        const per_page = 10
+
+        const response = await page.getUserList({
+            page : zpage,
+            per_page : per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(zpage);
+        expect(response.body.per_page).to.equal(per_page);
+        expect(response.body.data.length).to.equal(per_page);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_3}`, async function () {
+        const zpage = 2;
+
+        const response = await page.getUserList({
+            page : zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(zpage);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        expect(response.body.data.length).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_4}`, async function () {
+        const zpage = 2;
+        const per_page = 7;
+
+        const response = await page.getUserList({
+            page : zpage,
+            per_page : per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(zpage);
+        expect(response.body.per_page).to.equal(per_page);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_5}`, async function () {
+        const zpage = 2;
+        const per_page = 3;
+
+        const response = await page.getUserList({
+            page : zpage,
+            per_page : per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(zpage);
+        expect(response.body.per_page).to.equal(per_page);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_6}`, async function () {
+        const per_page = 7;
+
+        const response = await page.getUserList({
+            per_page : per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(per_page);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.positive.UL_7}`, async function () {
+        const per_page = 3;
+
+        const response = await page.getUserList({
+            per_page : per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(per_page);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_8}`, async function () {
+        const zpage = 1000;
+
+        const response = await page.getUserList({
+            page: zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(zpage);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_9}`, async function () {
+        const zpage = 0;
+
+        const response = await page.getUserList({
+            page: zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_10}`, async function () {
+        const zpage = -1;
+
+        const response = await page.getUserList({
+            page: zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_11}`, async function () {
+        const zpage = "";
+
+        const response = await page.getUserList({
+            page: zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_12}`, async function () {
+        const zpage = "a";
+
+        const response = await page.getUserList({
+            page: zpage
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_13}`, async function () {
+        const per_page = 1000;
+
+        const response = await page.getUserList({
+            per_page: per_page
+        });
+        total_data = response.body.total;
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(per_page);
+        expect(response.body.data.length).to.equal(total_data);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_14}`, async function () {
+        const per_page = -1;
+
+        const response = await page.getUserList({
+            per_page: per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_15}`, async function () {
+        const per_page = 0;
+
+        const response = await page.getUserList({
+            per_page: per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_16}`, async function () {
+        const per_page = "";
+
+        const response = await page.getUserList({
+            per_page: per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
+    it(`${testCase.negative.UL_17}`, async function () {
+        const per_page = "a";
+
+        const response = await page.getUserList({
+            per_page: per_page
+        });
+        expect(response.status).to.equal(DEFAULT_SUCCESS_STATUS);
+        expect(response.body.page).to.equal(DEFAULT_PAGE);
+        expect(response.body.per_page).to.equal(DEFAULT_PER_PAGE);
+        checkStructure(response.body.data);
+        checkLengthOfData(response);
+    });
+
     function checkStructure(data_payload) {
         const message = "property does not exist in data"
         const payloadKeys = ['id', 'email', 'first_name', 'last_name', 'avatar']
